@@ -1,0 +1,128 @@
+players = [
+    Player('Kira Lewis Jr.', 2020, 4, 8.11, 3.98),
+    Player('Aleksej Pokusevski', 2020, 2, 2.11, 12.50),
+    Player('Saddiq Bey', 2020, 2, 18.35, 19.15),
+    Player('Leandro Bolmaro', 2020, 2, 2.41, 0.80),
+    Player('R.J. Hampton', 2020, 3, 4.16, 1.67),
+    Player('Udoka Azubuike', 2020, 2, 6.42, 3.94),
+    Player('James Bouknight', 2021, 1, 5.64, 6.97),
+    Player('Joshua Primo', 2021, 2, 9.50, 0.09),
+    Player('Usman Garuba', 2021, 2, 7.22, 2.14),
+    Player('AJ Griffin', 2022, 2, 10.6, 2.81)
+]
+
+# Extract player names, before BPM, and after BPM values
+names = [player.name for player in players]
+bpm_before = [player.bpm_b for player in players]
+bpm_after = [player.bpm_a for player in players]
+
+# Set the positions of the bars on the x-axis
+x = np.arange(len(names))
+
+# Set width of the bars
+width = 0.35
+
+# Create a bar chart with before and after BPM
+fig, ax = plt.subplots(figsize=(12, 8))
+
+# Plot before and after BPM for each player
+bars_before = ax.bar(x - width/2, bpm_before, width, label='Before BPM', color='green')
+bars_after = ax.bar(x + width/2, bpm_after, width, label='After BPM', color='red')
+
+# Add labels, title, and custom x-axis tick labels
+ax.set_xlabel('Player')
+ax.set_ylabel('BPM')
+ax.set_title('Before and After BPM for Each Player')
+ax.set_xticks(x)
+ax.set_xticklabels(names, rotation=90)  # Rotate player names for better readability
+ax.legend()
+
+# Add BPM values on top of each bar for clarity
+for bar in bars_before:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.1, round(yval, 2), ha='center', va='bottom', fontsize=10)
+
+for bar in bars_after:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.1, round(yval, 2), ha='center', va='bottom', fontsize=10)
+
+# Show the plot
+plt.tight_layout()
+plt.show()
+
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.colors as mcolors
+
+# Define player data (name, draft year, teams, bpm_before, bpm_after, number_of_teams)
+players = [
+    Player('Kira Lewis Jr.', 2020, 4, 8.11, 3.98),
+    Player('Aleksej Pokusevski', 2020, 2, 2.11, 12.50),
+    Player('Saddiq Bey', 2020, 2, 18.35, 19.15),
+    Player('Leandro Bolmaro', 2020, 2, 2.41, 0.80),
+    Player('R.J. Hampton', 2020, 3, 4.16, 1.67),
+    Player('Udoka Azubuike', 2020, 2, 6.42, 3.94),
+    Player('James Bouknight', 2021, 1, 5.64, 6.97),
+    Player('Joshua Primo', 2021, 2, 9.50, 0.09),
+    Player('Usman Garuba', 2021, 2, 7.22, 2.14),
+    Player('AJ Griffin', 2022, 2, 10.6, 2.81)
+]
+
+# Extract player names, before BPM, after BPM values, and number of teams
+names = [player.name for player in players]
+bpm_before = [player.bpm_b for player in players]
+bpm_after = [player.bpm_a for player in players]
+number_of_teams = [player.teams for player in players]
+
+# Sort players by the number of teams (ascending order)
+sorted_indices = np.argsort(number_of_teams)
+
+# Reorder the data based on sorted indices
+names_sorted = [names[i] for i in sorted_indices]
+bpm_before_sorted = [bpm_before[i] for i in sorted_indices]
+bpm_after_sorted = [bpm_after[i] for i in sorted_indices]
+number_of_teams_sorted = [number_of_teams[i] for i in sorted_indices]
+
+# Set the positions of the bars on the x-axis
+x = np.arange(len(names_sorted))
+
+# Set width of the bars
+width = 0.3
+
+# Define a colormap for the number of teams
+norm = mcolors.Normalize(vmin=min(number_of_teams_sorted), vmax=max(number_of_teams_sorted))
+cmap = plt.get_cmap("coolwarm")  # You can choose a different colormap if you like
+
+# Create a bar chart with before and after BPM
+fig, ax = plt.subplots(figsize=(12, 8))
+
+# Map the number of teams to colors using the colormap
+colors_before = [cmap(norm(num)) for num in number_of_teams_sorted]
+colors_after = [cmap(norm(num)) for num in number_of_teams_sorted]
+
+# Plot before and after BPM for each player
+bars_before = ax.bar(x - width, bpm_before_sorted, width, color=colors_before)
+bars_after = ax.bar(x, bpm_after_sorted, width, color=colors_after)
+
+# Add labels, title, and custom x-axis tick labels
+ax.set_xlabel('Player')
+ax.set_ylabel('BPM')
+ax.set_title('Before and After BPM for Each Player Ordered by Number of Teams')
+ax.set_xticks(x)
+ax.set_xticklabels(names_sorted, rotation=90)  # Rotate player names for better readability
+
+# Add BPM values on top of each bar for clarity
+for bar in bars_before:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.1, round(yval, 2), ha='center', va='bottom', fontsize=10)
+
+for bar in bars_after:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.1, round(yval, 2), ha='center', va='bottom', fontsize=10)
+
+# Remove the legend
+# ax.legend()  # This line is commented out to remove the legend
+
+# Show the plot
+plt.tight_layout()
+plt.show()
