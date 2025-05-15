@@ -1,4 +1,4 @@
-# 🏀 Team-18: NBA Draft Trade Impact Analyzer
+# 🏀 Team-18: Trade Impact Of NBA Players on Rookies
 
 This project analyzes first-round NBA draft picks from 2017 to 2024, focusing on how trades affect player performance using **Box Plus-Minus (BPM)**—a stat that encapsulates assists, steals, blocks, rebounds, points, turnovers, and personal fouls.
 
